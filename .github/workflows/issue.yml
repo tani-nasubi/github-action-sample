@@ -1,0 +1,42 @@
+name: Issue Status Label
+
+on:
+  issues:
+    types:
+      - opened
+      - assigned
+      - unassigned
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  GH_REPO: ${{ github.repository }}
+  NUMBER: ${{ github.event.issue.number }}
+
+jobs:
+  opened:
+    if: github.event.action == 'opened' && github.event.issue.assignee.login == ''
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Add To Do label
+        run: gh issue edit $NUMBER --add-label "to do"
+
+  assigned:
+    if: github.event.action == 'assigned'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Add In Progress label
+        run: gh issue edit $NUMBER  --remove-label "to do" --add-label "in progress"
+
+  unassigned:
+    if: github.event.action == 'unassigned'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Remove In Progress label
+        run: gh issue edit $NUMBER  --remove-label "in progress" --add-label "to do"
+
