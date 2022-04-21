@@ -1,0 +1,8 @@
+foo:
+  - foo/*
+hoge1:
+  - hoge/hoge1/*
+hoge2:
+  - hoge/hoge2/*
+common:
+  - common/*
