@@ -1,9 +1,6 @@
 name: learn-github-action-sample
 on:
-  push:
-    branches:
-      - 'main'
-      - 'production'
+  push
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
